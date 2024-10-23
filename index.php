@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
         <input type="text" id="address" name="address" required><br><br>
 
         <label for="contactnumber">Contact Number:</label>
-        <input type="number" id="contactnumber" name="contactnumber" required><br><br>
+        <input type="text" id="contactnumber" name="contactnumber" required><br><br>
 
         <label for="course">Course:</label>
         <input type="text" id="course" name="course" required><br><br>
