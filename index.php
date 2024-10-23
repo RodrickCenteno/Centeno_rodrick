@@ -15,15 +15,22 @@ if (isset($_POST['submit'])) {
     $contactnumber = $_POST['contactnumber'];
     $course = $_POST['course'];
 
-    // Insert query to add new student data
-    $insertNewUser = mysqli_query($con, "INSERT INTO users (studentid, name, age, address, contactnumber, course) VALUES('$studentid', '$name', '$age', '$address', '$contactnumber', '$course')");
-
-    if ($insertNewUser) {
-        echo "New record created successfully";
+    // Check if the student ID already exists
+    $checkQuery = mysqli_query($con, "SELECT * FROM users WHERE studentid = '$studentid'");
+    if (mysqli_num_rows($checkQuery) > 0) {
+        echo "Error: Student ID '$studentid' already exists.";
     } else {
-        echo "Error: " . mysqli_error($con);
+        // Insert query to add new student data
+        $insertNewUser = mysqli_query($con, "INSERT INTO users (studentid, name, age, address, contactnumber, course) VALUES('$studentid', '$name', '$age', '$address', '$contactnumber', '$course')");
+
+        if ($insertNewUser) {
+            echo "New record created successfully";
+        } else {
+            echo "Error: " . mysqli_error($con);
+        }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
