@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$con=mysqli_connect("localhost","root","","crud_operations");
+$con=mysqli_connect("localhost","root","","activityone");
 
 // Check connection
 if ($con)
