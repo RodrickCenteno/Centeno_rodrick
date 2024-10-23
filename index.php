@@ -1,6 +1,12 @@
 <?php
+// Include database connection
 include('dbConnect.php');
 
+if (!$con) {
+    die("Failed to connect to MySQL: " . mysqli_connect_error());
+}
+
+// Include database connection
 if (isset($_POST['submit'])) {
     $studentid = $_POST['studentid'];
     $name = $_POST['name'];
@@ -9,7 +15,7 @@ if (isset($_POST['submit'])) {
     $contactnumber = $_POST['contactnumber'];
     $course = $_POST['course'];
 
-    // Fixed INSERT query
+    // Insert query to add new student data
     $insertNewUser = mysqli_query($con, "INSERT INTO users (studentid, name, age, address, contactnumber, course) VALUES('$studentid', '$name', '$age', '$address', '$contactnumber', '$course')");
 
     if ($insertNewUser) {
@@ -28,10 +34,9 @@ if (isset($_POST['submit'])) {
     <title>STUDENTS DATA</title>
 </head>
 <body>
-    <h1>Create Operation</h1>
-    <form action="create_function.php" method="POST">
-
-
+    <h1>STUDENTS DATA</h1>
+    <h2>CREATE OPERATION</h2>
+    <form action="index.php" method="POST">
         <label for="studentid">Student ID:</label>
         <input type="text" id="studentid" name="studentid" required><br><br>
         
@@ -54,7 +59,7 @@ if (isset($_POST['submit'])) {
     </form>
     <hr>
 
-    <h1>Read Operation</h1>
+    <h2>Read Operation</h2>
 
     <table>
         <thead>
@@ -69,24 +74,25 @@ if (isset($_POST['submit'])) {
         </thead>
         <tbody>
             <?php
-                $result = mysqli_query($con, "SELECT * FROM users");
+            // Fetch records from the database
+            $result = mysqli_query($con, "SELECT * FROM users");
 
-                if (mysqli_num_rows($result) != 0) {
-                    while ($users = mysqli_fetch_array($result)) {
-                        echo "<tr>
-                                <td>".$users['studentid']."</td>
-                                <td>".$users['name']."</td>
-                                <td>".$users['age']."</td>
-                                <td>".$users['address']."</td>
-                                <td>".$users['contactnumber']."</td>
-                                <td>".$users['course']."</td>
-                              </tr>";
-                    }
-                } else {
+            if (mysqli_num_rows($result) != 0) {
+                while ($users = mysqli_fetch_array($result)) {
                     echo "<tr>
-                            <td colspan='6'>No Records Found</td>
+                            <td>".$users['studentid']."</td>
+                            <td>".$users['name']."</td>
+                            <td>".$users['age']."</td>
+                            <td>".$users['address']."</td>
+                            <td>".$users['contactnumber']."</td>
+                            <td>".$users['course']."</td>
                           </tr>";
                 }
+            } else {
+                echo "<tr>
+                        <td colspan='6'>No Records Found</td>
+                      </tr>";
+            }
             ?>
         </tbody>
     </table>
