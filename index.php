@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 
     <h2>Read Operation</h2>
 
-    <table>
+    <table border="1">
         <thead>
             <tr>
                 <th>Student ID</th>
